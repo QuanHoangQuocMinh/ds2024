@@ -37,27 +37,30 @@ int main() {
 
     printf("Server listening on port %d...\n", PORT);
 
-    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
-        perror("accept");
-        exit(EXIT_FAILURE);
+    while (1) { // Keep the server running indefinitely
+        if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
+            perror("accept");
+            exit(EXIT_FAILURE);
+        }
+
+        // File receiving logic
+        FILE *received_file = fopen("received_file.txt", "wb");
+        if (received_file == NULL) {
+            perror("File cannot be opened");
+            exit(EXIT_FAILURE);
+        }
+
+        ssize_t bytes_received;
+        while ((bytes_received = recv(new_socket, buffer, BUFFER_SIZE, 0)) > 0) {
+            fwrite(buffer, sizeof(char), bytes_received, received_file);
+        }
+
+        printf("File received successfully.\n");
+
+        fclose(received_file);
+        close(new_socket);
     }
 
-    // File receiving logic
-    FILE *received_file = fopen("received_file.txt", "wb");
-    if (received_file == NULL) {
-        perror("File cannot be opened");
-        exit(EXIT_FAILURE);
-    }
-
-    ssize_t bytes_received;
-    while ((bytes_received = recv(new_socket, buffer, BUFFER_SIZE, 0)) > 0) {
-        fwrite(buffer, sizeof(char), bytes_received, received_file);
-    }
-
-    printf("File received successfully.\n");
-
-    fclose(received_file);
-    close(new_socket);
     close(server_fd);
 
     return 0;
