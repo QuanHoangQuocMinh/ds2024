@@ -34,7 +34,7 @@ int main() {
     }
 
     // File to send
-    FILE *file_to_send = fopen("/home/quan/Desktop/DistributedSystem/lab1/client/test.txt", "rb");
+    FILE *file_to_send = fopen("./test.txt", "rb");
     if (file_to_send == NULL) {
         perror("File cannot be opened");
         exit(EXIT_FAILURE);
