@@ -19,6 +19,18 @@ int main(int argc, char *argv[]) {
     }
 
     if (rank == 0) { // Server process
+        MPI_Probe(1, 0, MPI_COMM_WORLD, &status);
+        int count;
+        MPI_Get_count(&status, MPI_CHAR, &count);
+
+        char *buffer = (char *)malloc(count);
+        MPI_Recv(buffer, count, MPI_CHAR, 1, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+
+        FILE *file = fopen("received_file.txt", "wb");
+        fwrite(buffer, 1, count, file);
+        fclose(file);
+        free(buffer);
+    } else if (rank == 1) { // Client process
         FILE *file = fopen("./test.txt", "rb");
         if (file == NULL) {
             printf("Error opening file.\n");
@@ -34,19 +46,7 @@ int main(int argc, char *argv[]) {
         fread(buffer, 1, file_size, file);
         fclose(file);
 
-        MPI_Send(buffer, file_size, MPI_CHAR, 1, 0, MPI_COMM_WORLD);
-        free(buffer);
-    } else if (rank == 1) { // Client process
-        MPI_Probe(0, 0, MPI_COMM_WORLD, &status);
-        int count;
-        MPI_Get_count(&status, MPI_CHAR, &count);
-
-        char *buffer = (char *)malloc(count);
-        MPI_Recv(buffer, count, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-
-        FILE *file = fopen("received_file.txt", "wb");
-        fwrite(buffer, 1, count, file);
-        fclose(file);
+        MPI_Send(buffer, file_size, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
         free(buffer);
     }
 
