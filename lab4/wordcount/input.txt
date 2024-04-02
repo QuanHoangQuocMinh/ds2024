@@ -1,0 +1,6 @@
+Hello world
+This is a sample input file
+It contains some words
+And some of these words may repeat
+Repeat words are counted using MapReduce
+MapReduce is a programming model for processing large datasets
