@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define MAX_PATH_LENGTH 1024
-#define MAX_ITEMS 10000 // Maximum number of key-value pairs (adjust as needed)
+#define MAX_ITEMS 10000 // Maximum number of key-value pairs
 
 struct KeyValue
 {
@@ -109,7 +109,6 @@ int main(int argc, char *argv[])
     // Perform reducing on all mapped items
     reduce(output, total_items);
 
-    // Free allocated memory
     free(output);
 
     return 0;
