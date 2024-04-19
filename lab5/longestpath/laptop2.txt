@@ -1,0 +1,4 @@
+/Users/anotheruser/Documents/report.docx
+/Users/anotheruser/Documents/folder1/presentation.pptx
+/Users/anotheruser/Pictures/family_photo.jpg
+/Users/anotheruser/Music/favorite_song.mp3

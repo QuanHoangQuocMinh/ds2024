@@ -1,0 +1,4 @@
+/Users/user/Documents/file1.txt
+/Users/user/Documents/folder1/file2.txt
+/Users/user/Pictures/photo.jpg
+/Users/user/Music/song.mp3

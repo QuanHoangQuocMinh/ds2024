@@ -1,0 +1,4 @@
+/home/user/Documents/important_file.txt
+/home/user/Documents/folder1/notes.txt
+/home/user/Pictures/Screenshot/Family/vacation_photo.jpg
+/home/user/Music/playlist.mp3
